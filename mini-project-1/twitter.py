@@ -10,6 +10,7 @@ import argparse
 import os
 
 from google.cloud import videointelligence
+from google.cloud.storage import Blob
 
 # Twitter API credentials
 consumer_key = "consumer_key"
@@ -97,10 +98,22 @@ def analyze_explicit_content(path):
             likely_string[frame.pornography_likelihood]))
     # [END video_analyze_explicit_content]
 
+def upload_blob(bucket_name, source_file_name, destination_blob_name):
+    """Uploads a file to the bucket."""
+    storage_client = storage.Client(project='My First Project')
+    bucket = storage_client.get_bucket(bucket_name)
+    blob = bucket.blob(destination_blob_name)
+    with open('output.mp4', 'rb') as my_file:
+        blob.upload_from_file(my_file)
+    print('File {} uploaded to {}.'.format(
+        source_file_name,
+        destination_blob_name))
 
 if __name__ == '__main__':
     # pass in the username of the account you want to download
     get_all_tweets_pics("@Ibra_official")
     mpegvideo()
-    os.system('export GOOGLE_APPLICATION_CREDENTIALS="Google credentials')
-    analyze_explicit_content("path")
+    os.system('export GOOGLE_APPLICATION_CREDENTIALS="/Users/tty/Downloads/a.json"')
+    upload_blob("testtty","output.mp4","output.mp4")
+    #need google cloud service
+    #analyze_explicit_content("output.mp4")

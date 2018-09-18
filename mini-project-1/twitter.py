@@ -114,6 +114,6 @@ if __name__ == '__main__':
     get_all_tweets_pics("@Ibra_official")
     mpegvideo()
     os.system('export GOOGLE_APPLICATION_CREDENTIALS="/Users/tty/Downloads/a.json"')
-    upload_blob("testtty","output.mp4","output.mp4")
+    upload_blob(bucket_name, source_file_name, destination_blob_name)
     #need google cloud service
-    #analyze_explicit_content("output.mp4")
+    analyze_explicit_content(gsu_path)

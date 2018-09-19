@@ -4,13 +4,13 @@
 
 
 import tweepy
-from urllib.request import urlretrieve
 import subprocess
 import os
 import io
 
 from PIL import Image
 from PIL import ImageDraw
+from urllib.request import urlretrieve
 from google.cloud import vision
 from google.cloud.vision import types
 from google.cloud import videointelligence

@@ -11,7 +11,7 @@ Table of Contents
 
    * [EC601](#ec601)
       * [Mini Project 1](#mini-project-1)
-         * [Twitter.py](#twitterpy)
+         * [minipj1.py](#minipy1py)
             * [get_all_tweets_pics(screen_name)](#get_all_tweets_picsscreen_name)
             * [pictureTag(numb)](#picturetagnumb)
             * [mpegvideo()](#mpegvideo)
@@ -23,16 +23,26 @@ Table of Contents
 
 ## Mini Project 1
 
-This python file is used to download pictures from certain twitter user, change pictures to mpeg video and get tagged by Google Vision
+This python file is used to download pictures from certain twitter user, get tagged by Google Vision and changed pictures to mpeg video 
 
-### Twitter.py
+### minipj1.py
 
 Before you use this twitter.py, you have to apply for a twitter developer account. Enter your Twitter consumer, access key and secret in the head of this python file.
 
 You also need to apply for a Google Account so you can use the Google cloud service. You need to set the following statement in your .bash_profile and restart your computer to ensure you can pass Google Authentication
 
-```
+```shell
 export GOOGLE_APPLICATION_CREDENTIALS="YOUR AUTH JSON FILE PATH"
+```
+You can choose to add
+```python
+os.system('export GOOGLE_APPLICATION_CREDENTIALS="YOUR AUTH JSON FILE PATH"')
+```
+to the main function, it is also correct
+
+You NEED to install ffmpeg in your system before you start, the ffmpeg can be installed by brew
+```shell
+brew install ffmpeg
 ```
 
 #### get_all_tweets_pics(screen_name)

@@ -90,7 +90,6 @@ def pictureTag(numb):
 
     # The name of the image file to annotate
     path = os.getcwd()
-    new_num = 1
 
     for i in range(1, numb):
         file_name_jpg = path + "/" + str(i) + ".jpg"
@@ -117,7 +116,6 @@ def pictureTag(numb):
 
         # save
         img.save(str(i)+".jpg")
-        new_num += 1
 
 
 if __name__ == '__main__':

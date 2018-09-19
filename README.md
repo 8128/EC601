@@ -17,7 +17,7 @@ Before you use this twitter.py, you have to apply for a twitter developer accoun
 
 You also need to apply for a Google Account so you can use the Google cloud service.  The Google developer JSON credentials is needed, you should enter it in the tail of the python file
 
-####get_all_tweets_pics(screen_name)
+#### get_all_tweets_pics(screen_name)
 
 - enter the twitter ID you want to download the pictures of him
 - the picture names will be named as increasing number from 1.jpg
@@ -39,6 +39,6 @@ You also need to apply for a Google Account so you can use the Google cloud serv
 - enter the GSU path of the video file you uploaded, this function can analyze explicit content of the video
 - the result will be printed out
 
-###Analysis.py
+### Analysis.py
 
 This python file provide a detailed review of the google cloud analysis function

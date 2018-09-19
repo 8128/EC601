@@ -29,9 +29,7 @@ This python file is used to download pictures from certain twitter user, change 
 
 Before you use this twitter.py, you have to apply for a twitter developer account. Enter your Twitter consumer, access key and secret in the head of this python file.
 
-You need to set the following statement in your .bash_profile and restart your computer to ensure you can pass Google Authentication
-
-You also need to apply for a Google Account so you can use the Google cloud service.  The Google developer JSON credentials is needed, you should enter it in the tail of the python file
+You also need to apply for a Google Account so you can use the Google cloud service. You need to set the following statement in your .bash_profile and restart your computer to ensure you can pass Google Authentication
 
 ```
 export GOOGLE_APPLICATION_CREDENTIALS="YOUR AUTH JSON FILE PATH"

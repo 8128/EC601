@@ -98,6 +98,7 @@ def analyze_explicit_content(path):
             likely_string[frame.pornography_likelihood]))
     # [END video_analyze_explicit_content]
 
+
 def upload_blob(bucket_name, source_file_name, destination_blob_name):
     """Uploads a file to the bucket."""
     storage_client = storage.Client(project='My First Project')
@@ -109,11 +110,12 @@ def upload_blob(bucket_name, source_file_name, destination_blob_name):
         source_file_name,
         destination_blob_name))
 
+
 if __name__ == '__main__':
     # pass in the username of the account you want to download
-    get_all_tweets_pics("@Ibra_official")
+    get_all_tweets_pics("the page of twitter you want to download")
     mpegvideo()
-    os.system('export GOOGLE_APPLICATION_CREDENTIALS="/Users/tty/Downloads/a.json"')
-    upload_blob(bucket_name, source_file_name, destination_blob_name)
+    os.system('export GOOGLE_APPLICATION_CREDENTIALS="your credentials json file"')
+    upload_blob(your_bucket_name, your_source_file_name, your_destination_blob_name)
     #need google cloud service
-    analyze_explicit_content(gsu_path)
+    analyze_explicit_content(your_gsu_path)

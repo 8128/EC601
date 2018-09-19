@@ -72,13 +72,14 @@ def get_all_tweets_pics(screen_name):
             urlretrieve(URL, mediaName)
             picNum += 1
 
+    # return the number of picture        
     return picNum
 
 
 # using the ffmpeg to generate the mp4 from pictures with number
 def mpegvideo():
-    # subprocess.call("ffmpeg -framerate 24 -i %d.jpg output.mp4", shell=True)
     ffmpeg_command = 'ffmpeg -framerate 0.25 -i %d.jpg output.mp4'
+    # using os.system is also correct
     subprocess.call(ffmpeg_command, shell=True)
 
 
@@ -119,34 +120,12 @@ def pictureTag(numb):
         new_num += 1
 
 
-# this API is not used because you have to upload video to Google cloud
-def analyze_explicit_content(path):
-    # [START video_analyze_explicit_content]
-    """ Detects explicit content from the GCS path to a video. """
-    video_client = videointelligence.VideoIntelligenceServiceClient()
-    features = [videointelligence.enums.Feature.EXPLICIT_CONTENT_DETECTION]
-
-    operation = video_client.annotate_video(path, features=features)
-    print('\nProcessing video for explicit content annotations:')
-
-    result = operation.result(timeout=90)
-    print('\nFinished processing.')
-
-    likely_string = ("Unknown", "Very unlikely", "Unlikely", "Possible",
-                     "Likely", "Very likely")
-
-    # first result is retrieved because a single video was processed
-    for frame in result.annotation_results[0].explicit_annotation.frames:
-        frame_time = frame.time_offset.seconds + frame.time_offset.nanos / 1e9
-        print('Time: {}s'.format(frame_time))
-        print('\tpornography: {}'.format(
-            likely_string[frame.pornography_likelihood]))
-    # [END video_analyze_explicit_content]
-
-
 if __name__ == '__main__':
     # pass in the username of the account you want to download
     picNumb = get_all_tweets_pics("@Ibra_official")
+
+    # using the picture number to tag certain number of pictures in folder
     pictureTag(picNumb)
+
+    # generate the video with tagged pictures
     mpegvideo()
-    # analyze_explicit_content('output.mp4')

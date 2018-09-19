@@ -6,11 +6,14 @@
 import tweepy
 from urllib.request import urlretrieve
 import subprocess
-import argparse
 import os
+import io
 
+from PIL import Image
+from PIL import ImageDraw
+from google.cloud import vision
+from google.cloud.vision import types
 from google.cloud import videointelligence
-from google.cloud.storage import Blob
 
 # Twitter API credentials
 consumer_key = "consumer_key"
@@ -19,6 +22,7 @@ access_key = "access_key"
 access_secret = "access_secret"
 
 
+# using twitter API to get all pics from certain username and return the number of picture
 def get_all_tweets_pics(screen_name):
     # Twitter only allows access to a users most recent 3240 tweets with this method
 
@@ -55,8 +59,8 @@ def get_all_tweets_pics(screen_name):
         print
         "...%s tweets downloaded so far" % (len(alltweets))
 
+    # download every pic in order
     picNum = 1
-
     for status in alltweets:
         entities = status._json.get('entities')
         media = entities.get('media', [{}])
@@ -68,13 +72,54 @@ def get_all_tweets_pics(screen_name):
             urlretrieve(URL, mediaName)
             picNum += 1
 
+    return picNum
 
+
+# using the ffmpeg to generate the mp4 from pictures with number
 def mpegvideo():
     # subprocess.call("ffmpeg -framerate 24 -i %d.jpg output.mp4", shell=True)
     ffmpeg_command = 'ffmpeg -framerate 0.25 -i %d.jpg output.mp4'
     subprocess.call(ffmpeg_command, shell=True)
 
 
+# tag all the pictures using google vision API
+def pictureTag(numb):
+    # Instantiates a client
+    client = vision.ImageAnnotatorClient()
+
+    # The name of the image file to annotate
+    path = os.getcwd()
+    new_num = 1
+
+    for i in range(1, numb):
+        file_name_jpg = path + "/" + str(i) + ".jpg"
+        file_name = os.path.join(
+            os.path.dirname(__file__),
+            file_name_jpg)
+
+        # Loads the image into memory
+        with io.open(file_name, 'rb') as image_file:
+            content = image_file.read()
+
+        image = types.Image(content=content)
+
+        # Performs label detection on the image file
+        response = client.label_detection(image=image)
+        labels = response.label_annotations
+
+        # openPic
+        img = Image.open(file_name_jpg)
+
+        # draw
+        draw = ImageDraw.Draw(img)
+        draw.text((0, 0), str(labels), (255, 255, 255))  # Position/Content/Color
+
+        # save
+        img.save(str(i)+".jpg")
+        new_num += 1
+
+
+# this API is not used because you have to upload video to Google cloud
 def analyze_explicit_content(path):
     # [START video_analyze_explicit_content]
     """ Detects explicit content from the GCS path to a video. """
@@ -99,23 +144,9 @@ def analyze_explicit_content(path):
     # [END video_analyze_explicit_content]
 
 
-def upload_blob(bucket_name, source_file_name, destination_blob_name):
-    """Uploads a file to the bucket."""
-    storage_client = storage.Client(project='My First Project')
-    bucket = storage_client.get_bucket(bucket_name)
-    blob = bucket.blob(destination_blob_name)
-    with open('output.mp4', 'rb') as my_file:
-        blob.upload_from_file(my_file)
-    print('File {} uploaded to {}.'.format(
-        source_file_name,
-        destination_blob_name))
-
-
 if __name__ == '__main__':
     # pass in the username of the account you want to download
-    get_all_tweets_pics("the page of twitter you want to download")
+    picNumb = get_all_tweets_pics("@Ibra_official")
+    pictureTag(picNumb)
     mpegvideo()
-    os.system('export GOOGLE_APPLICATION_CREDENTIALS="your credentials json file"')
-    upload_blob(your_bucket_name, your_source_file_name, your_destination_blob_name)
-    #need google cloud service
-    analyze_explicit_content(your_gsu_path)
+    # analyze_explicit_content('output.mp4')

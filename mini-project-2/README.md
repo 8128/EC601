@@ -1,5 +1,7 @@
 # Mini Project 2
 
+The dataset is removed because it is too large. You can still download them from Kaggle.
+
 ## Preparetion
 
 ### Install tensorflow

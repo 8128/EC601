@@ -1,20 +1,14 @@
 # Table of Contents
 
-- [EC601](#ec601)
-  - [Mini Project 1](#mini-project-1)
-    - [minipj1.py](#minipy1py)
-      - [get_all_tweets_pics(screen_name)](#get_all_tweets_picsscreen_name)
-      - [pictureTag(numb)](#picturetagnumb)
-      - [mpegvideo()](#mpegvideo)
-      - [[deprecated]Upload_blob(bucket_name, source_file_name, destination_blob_name)](#deprecatedupload_blobbucket_name-source_file_name-destination_blob_name)
-      - [[deprecated]analyze_explicit_content(path)](#deprecatedanalyze_explicit_contentpath)
-    - [[deprecated]Analysis.py](#deprecatedanalysispy)
-
-
+[TOC]
 
 ## Mini Project 1
 
 This python file is used to download pictures from certain twitter user, get tagged by Google Vision and changed pictures to mpeg video 
+
+[2018-11-30 update] Now a database connector API is added.
+
+This API is used for stroing user information and information of photos downloaded from twitter.
 
 ### minipj1.py
 
@@ -59,16 +53,38 @@ brew install ffmpeg
 - the generated file name will be 'output.mp4'
 - the frame rate is set to 0.25
 
-#### [deprecated]Upload_blob(bucket_name, source_file_name, destination_blob_name)
+### db.py
 
-- this function will allow you to upload blob file to Google Cloud
-- google cloud account is needed, and you may be charged for this service
+#### Class mySQLmod
 
-#### [deprecated]analyze_explicit_content(path)
+##### Prequisites 
 
-- enter the GSU path of the video file you uploaded, this function can analyze explicit content of the video
-- the result will be printed out
+- You have to download and install MySQL and start local service. You have to use Legacy Password Encryption or you may encounter connection problems.
 
-### [deprecated]Analysis.py
+- You have to install mysql-connector from python. Install by:
 
-This python file provide a detailed review of the google cloud analysis function
+  ```bash
+  pip install mysql-connector
+  ```
+
+- Make sure you do not have database named "twitter", although your database won't be wiped out, the function of db.py may not work well.
+
+##### Initialization 
+
+- To create the basic mySQLmod object, you have to provide your password, username. The host will be localhost if you do not enter.
+
+#### Class mongoMod
+
+##### Prerequisites
+
+- You have to install pymongo first by
+
+  ```bash
+  pip install pymongo
+  ```
+
+- You have to set your mongodb up and start it using
+
+  ```bash
+  mongod
+  ```

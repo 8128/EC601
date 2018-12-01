@@ -9,7 +9,7 @@ class mySQLmod(object):
 
     # you have to use the commit function to implement all changes
     
-    def __init__(self,passwd,user,host="localhost"):
+    def __init__(self,passwd,user="root",host="localhost"):
         self.passwd = passwd
         self.host = host
         self.user = user
@@ -202,6 +202,15 @@ class mongoDBmod(object):
     def search_username(self, key):
         try:
             result = self.db_user.find({"user_name":key})
+            for x in result:
+                print(x)
+        except:
+            raise AttributeError
+        self.log_search+=1
+
+    def search_user_time(self, key):
+        try:
+            result = self.db_user.find({"date":key})
             for x in result:
                 print(x)
         except:
